@@ -1,25 +1,25 @@
 %Aluno: Adeilson Ribeiro dos Santos
-%Aluno: João Paulo da Costa Barroso
+%Aluno: JoÃ£o Paulo da Costa Barroso
 %Aluno: Gilsandro Maia Reis
 
 clear all
 clc
 close all
 
-load hil_cat5_62_9.mat;
+load hil_cat5_62_9.mat; %%Arquivo com as informaÃ§Ãµes do cabo fornecido pelo professor
 
 frequeInicial = 10e3;
 frequeFinal = 100e6;
 espacamento = 43.125e3;
 
-freq = frequeInicial:espacamento:frequeFinal;
+freq = frequeInicial:espacamento:frequeFinal; %%Cria um vetor
 
 %% PSD Transmitida
 psdTrans = -76 * ones (length(freq),1);
-plot(freq,psdTrans);
+plot(freq,psdTrans); %%Plota o grÃ¡fico da PSD Transmitida na frequÃªncia.
 grid on;
 title('PSD Transmitida');
-xlabel('Frequência (MHz)');
+xlabel('FrequÃªncia (MHz)');
 ylabel('PSD (dBm/Hz)');
 
 %% PSD Transmitida em dbm p/ mw 
@@ -37,23 +37,23 @@ xlabel('Frequency (MHz)');
 ylabel('dBm');
 title('PSD Recebida');
 
-%% Função de Transferencia
+%% FunÃ§Ã£o de Transferencia
 figure; plot(freq,20*log10(abs(hil)));
 grid on;
-title('Função de Transferência da Linha');
-xlabel('Frequência (MHz)');
+title('FunÃ§Ã£o de TransferÃªncia da Linha');
+xlabel('FrequÃªncia (MHz)');
 ylabel('Ganho (dB)');
 
-%%Ruído
+%%RuÃ­do
 psd_ruido = -140 * ones (length(freq),1);
 psd_ruido_awgn = awgn(psd_ruido,1);
 psd_ruido_awgn_mw = 10.^(psd_ruido_awgn./10);
 %figure; plot(freq,psd_ruido);
 figure; plot(freq,psd_ruido_awgn);
 grid on;
-xlabel('Frequência (Hz)');
-ylabel('PSD do Ruído (dBm/Hz)');
-title('PSD do Ruído');
+xlabel('FrequÃªncia (Hz)');
+ylabel('PSD do RuÃ­do (dBm/Hz)');
+title('PSD do RuÃ­do');
 
 %%SNR
 gamaSnr = 9.75;
@@ -66,34 +66,34 @@ snr_dbm = 10*log10(snr);
 figure; plot(freq,snr_dbm);
 grid on;
 title('SNR');
-xlabel('Frequência (MHz)');
+xlabel('FrequÃªncia (MHz)');
 ylabel('SNR (dB)');
 
 %%Bitloading
 bit = floor(log2(1 + snr));
 figure; plot(freq,bit);
 grid on;
-xlabel('Frequência (Hz)');
+xlabel('FrequÃªncia (Hz)');
 ylabel('Bitloading');
 title('Bitloading');
 
 
 %%Potencia tx em mW
 pot_tx_mw = 43.125e3 * sum(psdMW); 
-disp ('Potência Transmitida em MW');
+disp ('PotÃªncia Transmitida em MW');
 disp (pot_tx_mw);
 
 %%Potencia tx em dBm
 pot_tx_dbm = 10*log10(pot_tx_mw);
-disp ('Potência Transmitida em dBm');
+disp ('PotÃªncia Transmitida em dBm');
 disp (pot_tx_dbm);
 
 %%Potencia rx em dbm e mw
 pot_rx_mw = 43.125e3 * sum(Tx_mw);
-disp ('Potência recebida em mW');
+disp ('PotÃªncia recebida em mW');
 disp (pot_rx_mw);
 pot_rx_dbm = 10*log10(pot_rx_mw);
-disp ('Potência recebida em dBm');
+disp ('PotÃªncia recebida em dBm');
 disp (pot_rx_dbm);
 
 %%capacidade do canal
